@@ -1,26 +1,32 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import SearchBar from '../search-bar/SearchBar';
+import ImageList from '../image-list/ImageList';
+import unsplash from '../../apis/unsplash';
 
 const PicSearch = (props) => {
     let [terminoBusqueda, setTerminoBusqueda] = useState('');
+    let [imagenes, setImagenes] = useState([]);
     
     const onSearchBarSubmit = (terminoBusqueda) => {
         setTerminoBusqueda(terminoBusqueda);
     }
 
     useEffect( () => {
-        axios.get('https://api.unsplash.com/search/photos', {
-            params: { query: terminoBusqueda},
-            headers: {
-                'Authorization': 'Client-ID NNCD4MPPD7QdGeDjI_PxTHT4TYhWcz6X2KkTOUV2xCs'
-            }
+        unsplash.get('/search/photos', {
+            params: { query: terminoBusqueda, per_page: 25},            
         }).then( response =>{
-            console.log(response);
+            setImagenes(response.data.results);
         }) 
     }, [terminoBusqueda] )
 
-    return <SearchBar onSearchBarSubmit={onSearchBarSubmit} />
+    return (
+        <>
+            <SearchBar onSearchBarSubmit={onSearchBarSubmit} />
+            <div className="py-4">
+                <ImageList imagenes={imagenes} />
+            </div>
+        </>
+    )
 }
 
 export default PicSearch;
