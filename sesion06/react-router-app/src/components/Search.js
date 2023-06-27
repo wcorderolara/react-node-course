@@ -9,7 +9,7 @@ const Search = () => {
     e.preventDefault();
 
     const query = {
-      title: searchInputRef.current.value
+      title: searchInputRef.current.value // /articles?title=html
     }
     const queryString = createSearchParams(query);
 
