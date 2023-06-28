@@ -1,23 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import SearchBar from '../search-bar/SearchBar';
 import ImageList from '../image-list/ImageList';
-import unsplash from '../../apis/unsplash';
+// importar los elementos de Redux
+import { useSelector, useDispatch} from 'react-redux';
+import { fetchImagenesAsync, selectImagenes } from '../../reducers/pictures/picturesReducer';
+
 
 const PicSearch = (props) => {
-    let [terminoBusqueda, setTerminoBusqueda] = useState('');
-    let [imagenes, setImagenes] = useState([]);
+    const imagenes = useSelector(selectImagenes);
+    const dispatch = useDispatch();
     
     const onSearchBarSubmit = (terminoBusqueda) => {
-        setTerminoBusqueda(terminoBusqueda);
+        dispatch(fetchImagenesAsync(terminoBusqueda));
     }
-
-    useEffect( () => {
-        unsplash.get('/search/photos', {
-            params: { query: terminoBusqueda, per_page: 25},            
-        }).then( response =>{
-            setImagenes(response.data.results);
-        }) 
-    }, [terminoBusqueda] )
 
     return (
         <>
