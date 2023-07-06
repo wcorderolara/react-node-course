@@ -6,7 +6,7 @@ var router = require("./router");
 const http = require('http');
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 3045;
 
 const server = http.createServer(function (request, response){
   router.home(request, response);
