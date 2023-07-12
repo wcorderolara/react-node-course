@@ -1,0 +1,1 @@
+export const API_URL = "http://localhost:4001/restaurants/api/v1"
